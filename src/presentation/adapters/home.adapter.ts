@@ -1,11 +1,11 @@
 import { GetAllCommentsUseCase } from '~/application/use-cases/get-all-comments.use-case'
 import { GetAllPostsUseCase } from '~/application/use-cases/get-all-posts.use-case'
-import { CommentRepository } from '~/infrastructure/repositories/comment.repository'
-import { PostRepository } from '~/infrastructure/repositories/post.repository'
+import { CommentRepositoryImpl } from '~/infrastructure/repositories/comment.repository.impl'
+import { PostRepositoryImpl } from '~/infrastructure/repositories/post.repository.impl'
 
 export class HomeAdapter {
-  private static _postRepository = new PostRepository()
-  private static _commentRepository = new CommentRepository()
+  private static _postRepository = new PostRepositoryImpl()
+  private static _commentRepository = new CommentRepositoryImpl()
 
   static getPostRepository() {
     return this._postRepository

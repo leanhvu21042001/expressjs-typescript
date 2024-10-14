@@ -1,7 +1,7 @@
 import { CommentEntity } from '~/domain/entities/comment.entity'
 import { ICommentRepository } from '~/domain/repositories/comment.repository.interface'
 
-export class CommentRepository implements ICommentRepository {
+export class CommentRepositoryImpl implements ICommentRepository {
   private comments: CommentEntity[] = []
 
   async findAll(): Promise<CommentEntity[]> {

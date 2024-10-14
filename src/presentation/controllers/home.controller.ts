@@ -10,6 +10,7 @@ export class HomeController implements IBaseController {
 
   public initializeRoutes(appRouter: Router) {
     appRouter.get(`${root}/get-all-posts`, wrapAsync(this.getAllPosts.bind(this)))
+    appRouter.get(`${root}/get-all-comments`, wrapAsync(this.getAllComments.bind(this)))
   }
 
   async getAllPosts(_req: Request, res: Response): Promise<Response> {

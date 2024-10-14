@@ -16,8 +16,9 @@ export class ConsoleShared {
     this.handleShow(console.error(message))
   }
 
-  static log(message?: unknown): void {
-    this.handleShow(console.log(message))
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  static log(message?: unknown, ...params: any[]): void {
+    this.handleShow(console.log(message, ...params))
   }
 
   static warn(message?: unknown): void {

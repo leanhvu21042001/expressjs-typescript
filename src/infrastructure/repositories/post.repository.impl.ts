@@ -1,7 +1,7 @@
 import { PostEntity } from '~/domain/entities/post.entity'
 import { IPostRepository } from '~/domain/repositories/post.repository.interface'
 
-export class PostRepository implements IPostRepository {
+export class PostRepositoryImpl implements IPostRepository {
   private posts: PostEntity[] = []
 
   async findAll(): Promise<PostEntity[]> {

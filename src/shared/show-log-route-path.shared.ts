@@ -1,12 +1,10 @@
 import { Router } from 'express'
-import { ENV } from './env.shared'
+import { ConsoleShared } from './console.shared'
 
-export function showLogRoutePath(appRouter: Router) {
-  if (ENV.NODE_ENV === 'development') {
-    appRouter.stack.forEach((route) => {
-      const method = (route.route?.stack.at(0)?.method ?? '').toUpperCase()
+export function showLogRoutePaths(appRouter: Router) {
+  appRouter.stack.forEach((route) => {
+    const method = (route.route?.stack.at(0)?.method ?? '').toUpperCase()
 
-      console.log(method, route.route?.path)
-    })
-  }
+    ConsoleShared.log(method, route.route?.path)
+  })
 }
