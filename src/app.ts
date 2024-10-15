@@ -1,8 +1,9 @@
-import express, { Router } from 'express'
-import { HttpStatus } from './domain/enums'
+import express, { NextFunction, Request, Response, Router } from 'express'
 import { HttpException } from './domain/exceptions/http.exception'
-import { IBaseController } from './presentation/controllers/controller.interfaces'
+import { NotFoundException } from './domain/exceptions/not-found.exception'
 import { HomeController } from './presentation/controllers/home.controller'
+import { IBaseController } from './presentation/controllers/interfaces/controller.interfaces'
+import { ENV } from './shared/env.shared'
 import { showLogRoutePaths } from './shared/show-log-route-path.shared'
 
 class Application {
@@ -13,7 +14,7 @@ class Application {
     this.app = express()
     this.appRouter = express.Router()
 
-    this.loadMiddlewares()
+    this.loadMiddleware()
     this.loadControllers()
     this.loadLastCommonsSetup()
   }
@@ -26,9 +27,9 @@ class Application {
     return this.appRouter
   }
 
-  private loadMiddlewares() {
+  private loadMiddleware() {
     this.app.use(express.json())
-    this.app.use(express.urlencoded({ extended: true }))
+    this.app.use(express.urlencoded({ extended: true, limit: '15kb' }))
     this.app.use(this.appRouter)
   }
 
@@ -46,14 +47,29 @@ class Application {
   }
 
   private handleException() {
+    // Unhandled routes
+    this.app.all('*', (req: Request, _res: Response, next: NextFunction) => {
+      next(new NotFoundException(`Path ${req.originalUrl} does not exist for ${req.method} method`))
+    })
+
+    // Global error middleware
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    this.app.use(function (error: any, _req: express.Request, res: express.Response) {
+    this.app.use((error: any, req: Request, res: Response) => {
+      let errorConverter: HttpException = new HttpException(500, 'Internal Server Error')
+
       if (error instanceof HttpException) {
-        res.status(error.status).send(error)
+        errorConverter = new HttpException(error.status, error.message)
+      }
+
+      // check error fs
+
+      // check error db
+
+      if (ENV.NODE_ENV === 'development') {
+        res.status(errorConverter.status).send(errorConverter.message)
       } else {
-        res
-          .status(HttpStatus.INTERNAL_SERVER_ERROR)
-          .send(new HttpException(error.message, HttpStatus.INTERNAL_SERVER_ERROR))
+        delete errorConverter.stack
+        res.status(errorConverter.status).send(errorConverter.message)
       }
     })
   }

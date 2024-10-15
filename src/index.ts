@@ -18,6 +18,12 @@ app.set('port', port)
 
 const server = http.createServer(app)
 
+process.on('uncaughtException', (err) => {
+  console.log('Uncaught Exception: ', err.message)
+  console.log('Closing server now...')
+  process.exit(1)
+})
+
 /**
  * Listen on provided port, on all network interfaces.
  */
@@ -25,6 +31,22 @@ const server = http.createServer(app)
 server.listen(port)
 server.on('error', onError)
 server.on('listening', onListening)
+
+process.on('unhandledRejection', (err) => {
+  console.log(err)
+  console.log('Closing server now...')
+  server.close(() => {
+    process.exit(1)
+  })
+})
+
+process.on('SIGTERM', () => {
+  console.log('SIGTERM received. Shutting down gracefully')
+  server.close(() => {
+    console.log('Closed out remaining connections')
+    process.exit(0)
+  })
+})
 
 /**
  * Normalize a port into a number, string, or false.

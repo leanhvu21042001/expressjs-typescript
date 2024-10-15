@@ -3,6 +3,6 @@ import { HttpException } from './http.exception'
 
 export class NotFoundException extends HttpException {
   constructor(message: string = 'Not Found') {
-    super(message, HttpStatus.NOT_FOUND)
+    super(HttpStatus.NOT_FOUND, message)
   }
 }
