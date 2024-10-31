@@ -1,5 +1,35 @@
 {
+  "workbench.colorTheme": "Default Dark+",
   "typescript.tsdk": "node_modules\\typescript\\lib",
+  "explorer.compactFolders": false,
+  "editor.formatOnSave": true,
+  "editor.codeActionsOnSave": {
+    "source.fixAll": "always",
+    "source.organizeImports": "always"
+  },
+  "emmet.includeLanguages": {
+    "javascript": "javascriptreact",
+    "typescript": "typescriptreact"
+  },
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[javascriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[scss]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[json]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
   "search.exclude": {
     "**/.git": true,
     "**/node_modules": true,
@@ -8,5 +38,6 @@
     "**/bower_components": true,
     "**/tmp": true,
     "**/.vscode": true
-  }
+  },
+  "cSpell.words": ["cloudinary"]
 }
